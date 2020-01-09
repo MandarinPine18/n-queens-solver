@@ -4,7 +4,7 @@
 This is a solver for the n-queens puzzle. It can work with any number of queens (https://en.wikipedia.org/wiki/Eight_queens_puzzle)
 
 ## Installation
-Install **Python 3.7** and **pip**. Use pip to install **numpy**. Use git to clone this repository.
+Please install **Python 3.7** and **pip**. Use pip to install **numpy**. Use git to clone this repository.
 
 ## Usage
 Once in the directory, use the following command to start the guesser.
