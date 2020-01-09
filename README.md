@@ -12,11 +12,7 @@ Once in the directory, use the following command to start the guesser.
   python3.7 guesser.py
 ```
 
-Included are two solvers: an early brute force solver and a more optimized systematic solver. The brute force solver is not recommended as it only prints one solution and it is very slow with a large number of queens. The systematic colver is far faster and outputs all solutions(press Ctrl+C to exit with large values of n, where there are thousands of solutions possible).
-
-The following are variables for behavior which can be set by editing the first few lines of the file:
-  n - number of queens
-  solver - solver to use (default: 's', it is not recommended to change this)
+Included are two solvers: an early brute force solver and a more optimized systematic solver. The brute force solver is not recommended as it only prints one solution and it is very slow with a large number of queens. The systematic colver is far faster and outputs all solutions(press Ctrl+C to exit with large values of n, where there are thousands of solutions output).
 
 ## License
 This is licensed under GNU GPL v3, included in the file named LICENSE.
