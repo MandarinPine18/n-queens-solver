@@ -3,6 +3,7 @@
 import numpy as np
 import random
 from support.diagonals import *
+from sys import exit
 
 # number of queens
 n = 20
@@ -58,18 +59,23 @@ def brute(n):
 class systematic:
     """
     This is another type of solver. It uses above rows to decide where on a row to place a queen. It is far faster than
-    the previous solver and outputs many more possible solutions. This solver is based on the generation of a model with
-    a list. It is easier to analyze within a program than an array, but requires a renderer to allow human
+    the previous solver and can output many more possible solutions. This solver is based on the generation of a model
+    with a list. It is easier to analyze within a program than an array, but requires a renderer to allow human
     comprehension.
     """
-    def __init__(self, n):
+    def __init__(self, n, random=True, limit=1):
         """
-        This class is designed to work like a method to maintain interchangeability. When this is instantiated, it
-        accepts the same parameter as the previous function. A counter is created and run is started
+        This class is designed to be interchangeable with the brute solver. When this is instantiated, it accepts the
+        same parameter as the previous function. A counter is created and run is started
+
+        :param n: number of queens and spots on one side of the board
+        :param random: set the solver to random guessing instead of sequential
+        :param limit: maximum number of solutions
         """
         self.size = n
         self.counter = 0
-        self.run()
+        self.random = random
+        self.limit = limit      # took run out of the init
 
     def checker(self, board, testrow, column):
         """
@@ -90,11 +96,17 @@ class systematic:
         if row == self.size:
             self.counter += 1
             self.render(board)
+            if self.counter >= self.limit:
+                exit()                          # modified
         else:
             for column in range(self.size):
-                if self.checker(board, row, column):
+                if self.random:
+                    c = random.randint(0, self.size - 1)            # modified
+                else:
+                    c = column
+                if self.checker(board, row, c):
                     newBoard = board
-                    newBoard[row] = column
+                    newBoard[row] = c
                     self.place(newBoard, row + 1)
 
     def render(self, positions):
@@ -105,7 +117,10 @@ class systematic:
         board = np.full((self.size, self.size), '-')
         for row in range(self.size):
             board[row][positions[row]] = 'Q'
-        print("Solution number "+str(self.counter))
+        if not self.limit == 1:
+            print("\nSolution "+str(self.counter))
+        else:
+            print("\nSolution:")                # modified
         print(board)
         print("\n")
 
@@ -115,7 +130,7 @@ class systematic:
         [[0, 0, 1], [0, 1, 0], [1, 0, 0]
         while systematic() would use
         [2, 1, 0]
-        This si easier to compute with math, but harder to visualize. It is also not practical for other chessboard
+        This is easier to compute with math, but harder to visualize. It is also not practical for other chessboard
         programs as is only supports one piece per row.
         """
         board = [-1] * self.size
@@ -126,12 +141,12 @@ if __name__ == '__main__':
     try:
         if solver == 's':
             np.set_printoptions(linewidth=4 * (n + 1))
-            systematic(n)
+            systematic(n).run()         # modified
         elif solver == 'b':
             brute(n)
         else:
             print("Invalid solver. Valid options for solver value are:\n's', 'b'")
     except KeyboardInterrupt:
-        print("System inturrupted, terminating.")
+        print("System interrupted, terminating.")
     except ImportError:
         print("Import error, make sure the dependencies in the README were installed.")
